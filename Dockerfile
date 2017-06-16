@@ -1,26 +1,21 @@
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER krichy@nmdps.net
 
 RUN sed -i -e 's/$/ contrib non-free/g' /etc/apt/sources.list && \
-	apt-get update && \
+	apt-get update && apt-get upgrade -f -y && \
 	apt-get install -f -y --no-install-recommends \
-	unrar unzip wget \
-	mono-complete && \
+	curl \
+	mono-runtime libmono-system-data4.0-cil libmono-system-web4.0-cil && \
 	apt-get clean && \
 	mkdir /wg /data
 
 RUN cd /wg && \
-    wget http://www.webgrabplus.com/sites/default/files/download/SW/V1.1.1/WebGrabPlusV1.1.1LINUX.rar && \
-    wget http://www.webgrabplus.com/sites/default/files/download/sw/V1.1.1/upgrade/patchexe_57.zip && \
-    unrar x WebGrabPlusV1.1.1LINUX.rar && \
-    unzip patchexe_57.zip && \
-    mv WebGrab+Plus.exe WebGrab+PlusV1.1.1LINUX/exe/ && \
-    mv xmltv.dll WebGrab+PlusV1.1.1LINUX/exe/ && \
-    find . -mindepth 1 -maxdepth 1 -type f -delete
+    curl http://www.webgrabplus.com/sites/default/files/download/SW/V2.0.7/WebGrabPlus_V2.0.7_beta_install.tar.gz | \
+    tar xzf - --strip-components=1
 
 VOLUME /data
 
 WORKDIR /data
 
-CMD ["mono", "/wg/WebGrab+PlusV1.1.1LINUX/exe/WebGrab+Plus.exe", "/data"]
+CMD ["mono", "/wg/bin/WebGrab+Plus.exe", "/data"]
