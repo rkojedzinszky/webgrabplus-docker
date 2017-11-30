@@ -11,7 +11,7 @@ RUN sed -i -e 's/$/ contrib non-free/g' /etc/apt/sources.list && \
 	mkdir /wg /data
 
 RUN cd /wg && \
-    curl http://www.webgrabplus.com/sites/default/files/download/SW/V2.0.7/WebGrabPlus_V2.0.7_beta_install.tar.gz | \
+    curl -L http://webgrabplus.com/sites/default/files/download/SW/V2.1.5/WebGrabPlus_V2.1.5_beta_install.tar.gz | \
     tar xzf - --strip-components=1
 
 VOLUME /data
