@@ -6,15 +6,13 @@ RUN sed -i -e 's/$/ contrib non-free/g' /etc/apt/sources.list && \
 	apt-get update && apt-get upgrade -f -y && \
 	apt-get install -f -y --no-install-recommends \
 	curl \
-	mono-runtime libmono-system-data4.0-cil libmono-system-web4.0-cil && \
+	mono-complete && \
 	apt-get clean && \
 	mkdir /wg /data
 
 RUN cd /wg && \
-    curl -L http://webgrabplus.com/sites/default/files/download/SW/V2.1.5/WebGrabPlus_V2.1.5_beta_install.tar.gz | \
+    curl -sL http://webgrabplus.com/sites/default/files/download/SW/V2.1.0/WebGrabPlus_V2.1_install.tar.gz | \
     tar xzf - --strip-components=1
-
-VOLUME /data
 
 WORKDIR /data
 
